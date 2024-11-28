@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Processor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px 30px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #2c3e50;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      width: 100%;
+      background: #3498db;
+      color: white;
+      padding: 10px 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #2980b9;
+    }
+
+    #file-error {
+      margin-top: 10px;
+      color: #e74c3c;
+      font-size: 14px;
+      display: none;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border: 1px solid #e5e7eb;
+      border-radius: 5px;
+      overflow-y: auto; /* Allow vertical scrolling */
+      max-height: 300px; /* Limit height to 300px */
+      font-family: monospace;
+      white-space: pre-wrap; /* Preserve whitespace and wrap text */
+      word-wrap: break-word; /* Break long words */
+    }
+
+
+    #copy-button {
+      display: block;
+      margin: 10px 0;
+      background: #2ecc71;
+      color: white;
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    #copy-button:hover {
+      background: #27ae60;
+    }
+
+    #copy-notification {
+      color: #2ecc71;
+      font-size: 14px;
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload & Process File</h1>
+    <form id="file-form">
+      <label for="file-input">Select a File</label>
+      <input type="file" id="file-input" name="file" required>
+      <button type="submit">Submit</button>
+      <div id="file-error">Invalid file extension. Please upload a valid file.</div>
+    </form>
+    <div id="result" class="hidden">
+      <h3>Processed Result:</h3>
+      <pre id="output"></pre>
+      <button id="copy-button">Copy to Clipboard</button>
+      <div id="copy-notification">Result copied to clipboard!</div>
+    </div>
+  </div>
+
+  <script>
+    // Define valid file extensions
+    const validExtensions = ['txt', 'csv', 'json'];
+
+    // Handle form submission
+    document.getElementById('file-form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const fileInput = document.getElementById('file-input');
+      const fileError = document.getElementById('file-error');
+
+      if (!fileInput.files[0]) {
+        alert('Please select a file before submitting.');
+        return;
+      }
+
+      const fileName = fileInput.files[0].name;
+      const fileExtension = fileName.split('.').pop().toLowerCase();
+
+      if (!validExtensions.includes(fileExtension)) {
+        fileError.style.display = 'block';
+        return;
+      } else {
+        fileError.style.display = 'none';
+      }
+
+      const formData = new FormData();
+      formData.append('file', fileInput.files[0]);
+
+      fetch('/upload', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to upload or process file');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const resultDiv = document.getElementById('result');
+          const outputPre = document.getElementById('output');
+
+          resultDiv.classList.remove('hidden');
+          outputPre.textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error: ' + error.message);
+        });
+    });
+
+    // Copy button functionality
+    document.getElementById('copy-button').addEventListener('click', function () {
+      const outputText = document.getElementById('output').textContent;
+
+      navigator.clipboard.writeText(outputText)
+        .then(() => {
+          const notification = document.getElementById('copy-notification');
+          notification.style.display = 'block';
+          setTimeout(() => {
+            notification.style.display = 'none';
+          }, 2000);
+        })
+        .catch(err => {
+          console.error('Failed to copy text:', err);
+          alert('Failed to copy text to clipboard');
+        });
+    });
+  </script>
+</body>
+</html>
