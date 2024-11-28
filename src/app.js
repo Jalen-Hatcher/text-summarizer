@@ -17,10 +17,12 @@ const upload = multer({ storage })
 
 app.use(express.json())
 
+// install dependencies for summarizer.py
 const installDependencies = () => {
     console.log('Installing Python dependencies...');
     const install = spawn('python3', ['-m', 'pip', 'install', '-r', 'requirements.txt']);
-  
+
+    // log intermediate pip errors
     install.stdout.on('data', (data) => {
       console.log(`Pip output: ${data}`);
     });
@@ -51,7 +53,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
   // path to the uploaded file
   const filePath = path.join(req.file.path);
 
-  // pun the Python script with the file path as sys argument
+  // run summarizer.py in new process with file path as argument
   const pythonProcess = spawn('python3', ['summarizer.py', filePath]);
 
   // collect output from summarizer.py
