@@ -13,3 +13,6 @@ A text summarization web API project for CSE 350 at the University of Louisville
 4. Upload your local file for testing using the browse... button. So far, this project only supports .txt and .csv files but the front-end interface handles invalid extensions.
 
 Note: Some improvements may be made to speed up the application. Right now it is using a web-based BERT CNN language model that takes dozens of seconds to generate tokens. Don't be alarmed if the application seems to stall, it's just waiting on a response from the model.
+
+# Housekeeping
+Keep in mind that all file uploads will be stored in disk on your local machine in the **uploads/** directory. Make sure to periodically clean these files to save space!
