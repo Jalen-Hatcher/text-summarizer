@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>File Processor</title>
+  <title>Text Summarizer</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     /* General Reset */
@@ -127,7 +127,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Upload & Process File</h1>
+    <h1>Upload & Summarize File</h1>
     <form id="file-form">
       <label for="file-input">Select a File</label>
       <input type="file" id="file-input" name="file" required>
@@ -135,7 +135,7 @@
       <div id="file-error">Invalid file extension. Please upload a valid file.</div>
     </form>
     <div id="result" class="hidden">
-      <h3>Processed Result:</h3>
+      <h3>Result:</h3>
       <pre id="output"></pre>
       <button id="copy-button">Copy to Clipboard</button>
       <div id="copy-notification">Result copied to clipboard!</div>
@@ -144,7 +144,7 @@
 
   <script>
     // Define valid file extensions
-    const validExtensions = ['txt', 'csv', 'json'];
+    const validExtensions = ['txt', 'csv'];
 
     // Handle form submission
     document.getElementById('file-form').addEventListener('submit', function (event) {
