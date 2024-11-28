@@ -23,10 +23,10 @@ def summarize_file(text):
     return json.dumps({"status": "success", "summary": summary})
 
 if __name__ == "__main__":
-    # get the file path from the command-line arguments
+    # get the file path command line arguments
     input_file = sys.argv[1]
     
-    # summarize the file
+    # summarize input file
     output = summarize_file(convert_to_string(input_file))
     
     # print result to stdout for app.js

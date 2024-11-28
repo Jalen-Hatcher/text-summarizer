@@ -6,7 +6,7 @@
   <title>Text Summarizer</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    /* General Reset */
+    /* general reset */
     * {
       margin: 0;
       padding: 0;
@@ -90,11 +90,11 @@
       background: #f8f9fa;
       border: 1px solid #e5e7eb;
       border-radius: 5px;
-      overflow-y: auto; /* Allow vertical scrolling */
-      max-height: 300px; /* Limit height to 300px */
+      overflow-y: auto; 
+      max-height: 300px; 
       font-family: monospace;
-      white-space: pre-wrap; /* Preserve whitespace and wrap text */
-      word-wrap: break-word; /* Break long words */
+      white-space: pre-wrap; 
+      word-wrap: break-word; 
     }
 
 
@@ -143,10 +143,10 @@
   </div>
 
   <script>
-    // Define valid file extensions
-    const validExtensions = ['txt', 'csv'];
+    // define valid file extensions
+    const validExtensions = ['txt', 'csv']; // room for additions !!
 
-    // Handle form submission
+    // handle form submission
     document.getElementById('file-form').addEventListener('submit', function (event) {
       event.preventDefault();
 
@@ -194,7 +194,7 @@
         });
     });
 
-    // Copy button functionality
+    // copy button functionality
     document.getElementById('copy-button').addEventListener('click', function () {
       const outputText = document.getElementById('output').textContent;
 

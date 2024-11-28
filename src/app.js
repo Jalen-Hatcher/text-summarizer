@@ -60,19 +60,19 @@ app.post('/upload', upload.single('file'), (req, res) => {
     pythonOutput += data.toString();
   });
 
-  // Handle errors from the Python script
+  // handle errors from summarizer.py
   pythonProcess.stderr.on('data', (data) => {
     console.error('Python script error:', data.toString());
     return res.status(500).json({ error: 'Error processing file with Python script' });
   });
 
-  // Handle the end of the Python script execution
+  // handle the end of script execution
   pythonProcess.on('close', (code) => {
     if (code === 0) {
       try {
-        // Parse the Python script's JSON output
+        // parse the script's JSON output
         const result = JSON.parse(pythonOutput);
-        res.json(result); // Send the result back to the client
+        res.json(result); // send result back to the client
       } catch (err) {
         console.error('Error parsing Python script output:', err);
         res.status(500).json({ error: 'Error parsing Python script output' });
@@ -83,7 +83,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
   });
 });
 
-// Serve the static index.html file on GET request
+// serve index.html on GET request
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
 });
