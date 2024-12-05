@@ -1,5 +1,5 @@
 # text-summarizer
-A text summarization web API project for CSE 350 at the University of Louisville.__
+A text summarization web API project for CSE 350 at the University of Louisville.<br />
 Contributors: Malak Alesachra, Landon Blair, Logan Daugherty, Jalen (Max) Hatcher
 
 # Installation 
