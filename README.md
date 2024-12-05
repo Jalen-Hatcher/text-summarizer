@@ -1,5 +1,6 @@
 # text-summarizer
 A text summarization web API project for CSE 350 at the University of Louisville.
+Contributors: Malak Alesachra, Landon Blair, Logan Daugherty, Jalen (Max) Hatcher
 
 # Installation 
 ## Prerequisites
@@ -15,4 +16,4 @@ A text summarization web API project for CSE 350 at the University of Louisville
 Note: Some improvements may be made to speed up the application. Right now it is using a web-based BART CNN language model that takes dozens of seconds to generate tokens. Don't be alarmed if the application seems to stall, it's just waiting on a response from the model.
 
 # Housekeeping
-Keep in mind that all file uploads will be stored in disk on your local machine in the **uploads/** directory. Make sure to periodically clean these files to save space!
+Keep in mind that all file uploads will be stored in disk on your local machine in the **uploads/** directory. Make sure to periodically clean this directory to save space!
